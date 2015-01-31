@@ -52,12 +52,25 @@ namespace ComplexCalculator
         {
             if (this.imaginary > 0)
             {
-                return String.Format("{0} + {1}i", this.real, this.imaginary);
-
+                if (this.imaginary != 1)
+                {
+                    return String.Format("{0} + {1}i", this.real, this.imaginary);
+                }
+                else
+                {
+                    return String.Format("{0} + i", this.real);
+                }
             }
             else if (this.imaginary < 0)
             {
-                return String.Format("{0} - {1}i", this.real, Math.Abs(this.imaginary));
+                if (this.imaginary != -1)
+                {
+                    return String.Format("{0} - {1}i", this.real, Math.Abs(this.imaginary));
+                }
+                else
+                {
+                    return String.Format("{0} - i", this.real);
+                }
             }
             else
             {
@@ -85,7 +98,7 @@ namespace ComplexCalculator
                 // and possibly more whitespace:
                 @"\s*" +
                 // Match any other float, and save it
-                @"([-+]?\d+\.?\d*|[-+]?\d*\.?\d+)" +
+                @"([-+]?\d+\.?\d*|[-+]?\d*\.?\d+)*" +
                 // ... followed by 'i'
                 @"i";
             Regex cmplxRegex = new Regex(regexPattern);
@@ -93,10 +106,18 @@ namespace ComplexCalculator
 
             // Parse the matched information
             double realpart = double.Parse(cmplxMatch.Groups[1].Value, CultureInfo.InvariantCulture);
-            double imgpart = double.Parse(cmplxMatch.Groups[2].Value + cmplxMatch.Groups[3].Value, CultureInfo.InvariantCulture);
-
+            double imgpart;
+            if (cmplxMatch.Groups[3].Success == false)
+            {
+                imgpart = double.Parse(cmplxMatch.Groups[2].Value + 1);
+            }
+            else
+            {
+                imgpart = double.Parse(cmplxMatch.Groups[2].Value + cmplxMatch.Groups[3].Value, CultureInfo.InvariantCulture);
+            }
             // Return a new complex number
             return new ComplexNumber(realpart, imgpart);
+
         }
     }
 

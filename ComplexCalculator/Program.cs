@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ComplexCalculator
 {
@@ -10,7 +11,8 @@ namespace ComplexCalculator
     {
         static void Main(string[] args)
         {
-            // Declaration section
+            /*
+             * // Declaration section
             String fstNum, sndNum, op;
             ComplexNumber first, second, result;
             // 2nd result in case it's not an operand but a conjugate or another mutation
@@ -66,7 +68,10 @@ namespace ComplexCalculator
                     Console.WriteLine("Result 2: " + result2);
                 }
             } while (true);
-            
+            */
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new ComplexGUI());
         }
     }
 }
